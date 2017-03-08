@@ -2,6 +2,7 @@
 #define GAME_HPP
 #include "Player.hpp"
 
+
 class Game {
     char ** board;  // the gameboard, will be initialized to size x size characters in makeBoard()
     // The board size should be anywhere between 3x3 and 11x11 
