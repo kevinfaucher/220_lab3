@@ -7,17 +7,50 @@ Game::Game() {
 // for non-automatized version – asks for board size, num players, num of computer players, and then initializes
  // everything
 // your code goes here
+    int boardSize;
+    int players;
+    int compPlayers;
+    cout << "Please enter the size of the board: " << endl;
+    cin >> boardSize;
+    cout << "Please enter the number of players: " << endl;
+    cin >> players;
+    cout << "Please enter the number of computer players: " << endl;
+    cin >> compPlayers;
+    
+    
 }
 
 Game::Game(bool b) {
 //for the automated version – if b is true, randomly generate the size of the board, set the num of players and the
 //num of compplayers to 2, and the, of course initialize everything
 // your code goes here
+    int ranBoard = rand() % 100 + 1; //random board size
+    int compPlayers = int numPlayers = 2;
 }
 
 void Game::makeBoard(){
 // dynamically generates the board to be size by size, with each cell initially set to ‘.’
 //your code goes here
+    /*
+     #include <stdio.h>
+
+int main()
+{
+	int array[9][3][3];
+	int a,b,c,i;
+
+//Initialize the multidimensional array 
+	i = 0;
+	for(a=0;a<9;a++)
+		for(b=0;b<3;b++)
+			for(c=0;c<3;c++)
+				array[a][b][c] = i++;
+
+
+}
+     */
+
+
 }
 
 void Game::printBoard() {
