@@ -3,10 +3,10 @@
 #include <iostream>
 using namespace std;
 
-Game::Game() {  
-// for non-automatized version - asks for board size, num players, num of computer players, and then initializes
- // everything
-  cout << "Please enter the size of the board: " << endl;
+Game::Game() {
+    // for non-automatized version - asks for board size, num players, num of computer players, and then initializes
+    // everything
+    cout << "Please enter the size of the board: " << endl;
     cin >> size;
     cout << "Please enter the number of players: " << endl;
     cin >> numPlayers;
@@ -15,42 +15,44 @@ Game::Game() {
 }//Game
 
 Game::Game(bool b) {
-//for the automated version - if b is true, randomly generate the size of the board, set the num of players and the
-//num of compplayers to 2, and the, of course initialize everything
+    //for the automated version - if b is true, randomly generate the size of the board, set the num of players and the
+    //num of compplayers to 2, and the, of course initialize everything
     int size = rand() % 100 + 1; //random board size
     int compplayers = int numPlayers = 2;
 }//Game
 
-void Game::makeBoard(){
-// dynamically generates the board to be size by size, with each cell initially set to '.'
-//your code goes here
+void Game::makeBoard() {
+    // dynamically generates the board to be size by size, with each cell initially set to '.'
+    //your code goes here
     board = new char*[size];
-    for(int i = 0; i < size; i++){
-    	board[i] = new char[size];
-    	for(int j = 0; j < size; j++){
-    		board[i][j] = '.';
-    	}
+    for (int i = 0; i < size; i++) {
+        board[i] = new char[size];
+        for (int j = 0; j < size; j++) {
+            board[i][j] = '.';
+        }
     }
 }//makeBoard
 
 void Game::printBoard() {
-//Note: I'm giving you this one
+    //Note: I'm giving you this one
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            cout << board[i][j]<<"\t";
+            cout << board[i][j] << "\t";
         }
         cout << endl;
     }
 }//printBoard
+
 void Game::printBoard() {
-//Note: I'm giving you this one
+    //Note: I'm giving you this one
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            cout << board[i][j]<<"\t";
+            cout << board[i][j] << "\t";
         }
         cout << endl;
     }
 }//printBoard
+
 void Game::getPlayers() {
     //This method dynamically generates an array of players, and then, for each element in the array, creates a new 
     //player object with a name and a character.  For the number of players that are computers, I used an array of names
