@@ -17,8 +17,8 @@ Game::Game() {
 Game::Game(bool b) {
     //for the automated version - if b is true, randomly generate the size of the board, set the num of players and the
     //num of compplayers to 2, and the, of course initialize everything
-    int size = rand() % 11 + 1; //random board size
-    int compplayers = int numPlayers = 2;
+    size = rand() % 11 + 1; //random board size
+    compplayers = numPlayers = 2;
 }//Game
 
 void Game::makeBoard() {
