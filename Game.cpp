@@ -33,15 +33,6 @@ void Game::makeBoard() {
     }
 }//makeBoard
 
-void Game::printBoard() {
-    //Note: I'm giving you this one
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            cout << board[i][j] << "\t";
-        }
-        cout << endl;
-    }
-}//printBoard
 
 void Game::printBoard() {
     //Note: I'm giving you this one
