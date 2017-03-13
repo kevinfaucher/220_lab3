@@ -33,7 +33,6 @@ void Game::makeBoard() {
     }
 }//makeBoard
 
-
 void Game::printBoard() {
     //Note: I'm giving you this one
     for (int i = 0; i < size; i++) {
@@ -51,6 +50,9 @@ void Game::getPlayers() {
     // for humans I called the Player constructor with no input parameters (that one asked the user for their name and 
     // their preferec character.
     // your code goes here
+    players = new **[numPlayers];
+    for (int i = 0; i < numPlayers; i++) {
+    }
 }
 
 void Game::printPlayers() {
