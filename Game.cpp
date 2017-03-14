@@ -118,17 +118,16 @@ void Game::getPlayers() {
     // for humans I called the Player constructor with no 
     //input parameters (that one asked the user for their name and 
     // their preferec character.
-    // your code goes here
 
-    //let us first create players for compPlayers
-    //it is given in the instruction to use an array of names. Let us first create it
+    //first create players for compPlayers
+    //it is given in the instruction to use an array of names.
     string compplayerNames = new string[compplayers]; //create an array to fill names
     //array size equals number of compPlayers
 
     char compplayerChar = new char[compplayers]; //create an array to fill chars to fill the board
     //this array size again equals number of compPlayers
 
-    //let us fill these two arrays now
+    //fill these two arrays now
     //declare a char here
     char c = 'A'; //c starts with A
     for (int i = 0; i < compplayers; i++)//loop from 0 to number of players
@@ -141,17 +140,6 @@ void Game::getPlayers() {
         c++; //increment c for next letter
     }
 
-    /*//next we set the compPlayerchar
-    int index=0;
-    for(char c='A';c<'A'+compPlayers;c++)//in this for loop we are starting from 
-    {//letter 'A' and run the loop upto number of compPlayers
-       compPlayerChar[index]=c;//set the c vaue into the array compPlayerChar
-       index++;//increment index
-       //why did we declare separate variable for index instead of using c from
-       //for loop, the usual style?
-       //because in for loop we are using char and to fill array, the array index
-       //should be a number. So we used this
-    }*/
 
     //declare an integer to get total number of objects we are to create
     int totalPlayers = numPlayers + compplayers; //total players is sum of human players and compPlayers
