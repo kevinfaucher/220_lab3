@@ -4,13 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Game.h</itemPath>
       <itemPath>Game.hpp</itemPath>
-      <itemPath>Player.h</itemPath>
       <itemPath>Player.hpp</itemPath>
-      <itemPath>cell.h</itemPath>
       <itemPath>cell.hpp</itemPath>
-      <itemPath>moveList.h</itemPath>
       <itemPath>moveList.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -50,27 +46,19 @@
       </compileType>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Game.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Game.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Player.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Player.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cell.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="cell.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cell.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="moveList.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="moveList.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="moveList.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -97,27 +85,19 @@
       </compileType>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Game.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Game.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Player.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Player.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cell.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="cell.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="cell.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="moveList.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="moveList.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="moveList.hpp" ex="false" tool="3" flavor2="0">
       </item>

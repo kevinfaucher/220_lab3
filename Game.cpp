@@ -169,7 +169,7 @@ void Game::getPlayers() {
 
     //now plIndex holds array index.. so you need not have to initialize it 
     // one more time in the coming for loop
-    for (int k = 0; plIndex < totalPlayers; plIndex++; k++)//k is the variable to get compPlayerName from the array
+    for (int k = 0; plIndex < totalPlayers; plIndex++, k++)//k is the variable to get compPlayerName from the array
     {
         myPlayers[plIndex] = new Player(compplayerNames[k], compplayerChar[k], true);
     }
