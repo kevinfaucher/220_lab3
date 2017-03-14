@@ -166,6 +166,8 @@ void Game::getPlayers() {
 void Game::printPlayers() {
     // this method is optional – I wrote it so I could test my getPlayers() method to make sure it generated all my Players
     // correctly.  If you choose not to include this method, that is fine.
+	for (int i = 0; i < numPlayers; i++){
+	        cout << (*players[i]).name << endl;
 }
 
 void Game::playGame() {
