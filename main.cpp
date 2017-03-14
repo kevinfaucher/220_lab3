@@ -22,5 +22,11 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 	cout << "hello wolrd!!!" << endl;
+	Game game;
+	game.makeBoard();
+	game.getPlayers();
+	game.printBoard();
+	game.printPlayers();
+	game.getWinner();
 	return 0;
 }
