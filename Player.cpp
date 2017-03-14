@@ -10,13 +10,15 @@ Player::Player() {
 	cout << "Please enter your name: ";
 	cin >> name;
 	cout << "Which character do you want to be: ";
-	cin >> character;
+	cin >> ic;
+	int score = 0;
+	isComputer = false;
 
 }
 
 Player::Player(string n, char ic, bool x) {
 // constructor that takes as input parameters a name string, a character ic,
 // and a Boolean value x and sets the name, the c, and the isComputer fields accordingly.  It initializes the score to 0
-
-
+	pname = name;
+	cchar = c;
 }
