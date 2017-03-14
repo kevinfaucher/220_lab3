@@ -56,7 +56,7 @@ Game::Game(bool b) {
     {
         //if game is fully automated, the set numPlayers and compPlayers to 2
         numPlayers = 2;
-        compPlayers = 2;
+        compplayers = 2;
         //now set size as a random number between 3 and 11
         size = rand() % 11 + 3; //random board size. here it should be +3 as size
         //starts from 3 and not from 1
@@ -122,22 +122,22 @@ void Game::getPlayers() {
 
     //let us first create players for compPlayers
     //it is given in the instruction to use an array of names. Let us first create it
-    string compPlayerNames = new string[compPlayers]; //create an array to fill names
+    string compplayerNames = new string[compplayers]; //create an array to fill names
     //array size equals number of compPlayers
 
-    char compPlayerChar = new char[compPlayers]; //create an array to fill chars to fill the board
+    char compplayerChar = new char[compplayers]; //create an array to fill chars to fill the board
     //this array size again equals number of compPlayers
 
     //let us fill these two arrays now
     //declare a char here
     char c = 'A'; //c starts with A
-    for (int i = 0; i < compPlayers; i++)//loop from 0 to number of players
+    for (int i = 0; i < compplayers; i++)//loop from 0 to number of players
     {
-        compPlayerNames[i] = "CP" + to_string(i + 1); //to_string() function will convert
+        compplayerNames[i] = "CP" + to_string(i + 1); //to_string() function will convert
         //integer value to string. it is an inbuilt function
         //so when you call it, it converts 1,2,3 to string and set names as CP1,CP2...
 
-        compPlayerChar[i] = c; //set c
+        compplayerChar[i] = c; //set c
         c++; //increment c for next letter
     }
 
@@ -154,7 +154,7 @@ void Game::getPlayers() {
     }*/
 
     //declare an integer to get total number of objects we are to create
-    int totalPlayers = numPlayers + compPlayers; //total players is sum of human players and compPlayers
+    int totalPlayers = numPlayers + compplayers; //total players is sum of human players and compPlayers
 
     //now we need to create an array of objects to class Player
     Player* myPlayers = new Player[totalPlayers]; //create an array of player objects
@@ -171,7 +171,7 @@ void Game::getPlayers() {
     // one more time in the coming for loop
     for (int k = 0; plIndex < totalPlayers; plIndex++; k++)//k is the variable to get compPlayerName from the array
     {
-        myPlayers[plIndex] = new Player(compPlayerNames[k], compPlayerChar[k], true);
+        myPlayers[plIndex] = new Player(compplayerNames[k], compplayerChar[k], true);
     }
 }
 
