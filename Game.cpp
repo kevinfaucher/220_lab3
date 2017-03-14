@@ -3,8 +3,19 @@
 #include <iostream>
 using namespace std;
 
+//    This constructor asks for user input (cin) to determine the size of the 
+//gameboard, the number of 
+//    and the number of players who are computers (automated).  
+//It then sets the size, numplayers, and 
+//    compplayers and calls the makeBoard method to create the board, 
+//calls the getPlayers function to 
+//    create an array of pointers to Player objects, 
+//sets turn to 0 (for the index of teh current player's
+//    turn), and sets won to be false.
+
 Game::Game() {
-    // for non-automatized version - asks for board size, num players, num of computer players, and then initializes
+    // for non-automatized version - asks for board size, num players, 
+    //num of computer players, and then initializes
     // everything
     cout << "Please enter the size of the board: " << endl;
     cin >> size;
@@ -12,17 +23,57 @@ Game::Game() {
     cin >> numPlayers;
     cout << "Please enter the number of computer players: " << endl;
     cin >> compplayers;
+    turn = 0; //set turn to 0
+    won = false; //sets won to false
+    makeBoard(); //call the makeBoard function
+    getPlayers(); //call the getPlayers function
+
 }//Game
 
+//    This constructor takes as input a boolean value indicating whether 
+//the game is completely automated
+//    or not.  If the game is automated (true boolean value), 
+//the numplayers and the compplayers are both
+//    set to 2 (meaning that there are 2 players, 
+//and they're both automatic, not human).  The board is 
+//    matrix is created as a random square size between 3 and 11 and 
+//calling makeBoard()), turn is set 
+//    to 0 (the first player), won is set to false, and the 
+//getPlayers function is called to create an array
+//    of pointers to Player objects.
+//    If the game is not automated (boolean value is false), 
+//the Game() constructor is called.
+//   This constructor is awesome for testing and for working
+//on Artificial Intelligence. 
+
 Game::Game(bool b) {
-    //for the automated version - if b is true, randomly generate the size of the board, set the num of players and the
+    //for the automated version - if b is true, 
+    //randomly generate the size of the board, set the num of players and the
     //num of compplayers to 2, and the, of course initialize everything
-    size = rand() % 11 + 1; //random board size
-    compplayers = numPlayers = 2;
+
+    //check if b is true
+    if (b)//if true then that means the game is fully automated
+    {
+        //if game is fully automated, the set numPlayers and compPlayers to 2
+        numPlayers = 2;
+        compPlayers = 2;
+        //now set size as a random number between 3 and 11
+        size = rand() % 11 + 3; //random board size. here it should be +3 as size
+        //starts from 3 and not from 1
+        //after size is set we call the makeBoard()
+        makeBoard();
+        turn = 0; //turn is set to 0
+        won = false//won is set to false
+                getPlayers(); //getPlayers is called
+    } else {
+        //if the game is not fully automated, then simply call the constructor Game()
+        Game();
+    }
 }//Game
 
 void Game::makeBoard() {
-    // dynamically generates the board to be size by size, with each cell initially set to '.'
+    // dynamically generates the board to be size by size,
+    //with each cell initially set to '.'
     //your code goes here
     board = new char*[size];
     for (int i = 0; i < size; i++) {
@@ -43,15 +94,84 @@ void Game::printBoard() {
     }
 }//printBoard
 
+
+//   This method sets up the dynamically created array of Players (players array).  
+//   I did this by including an array of names that was as long as the maximum 
+//number of players I could have in the 
+//   game, and an equally long array of characters for those players.  
+//   This function then dynamically allocated an array of players, and for 
+//each computer player (compplayers) it 
+//   created a new player object with a name from the name array and a
+//character from the character array.  It then
+//  initialized each human player by asking (cout) for the player’s name and 
+//reading it in (cin) and then asking for the
+// player’s character and reading that in, and then creating a
+//new player for the player array.
+
 void Game::getPlayers() {
-    //This method dynamically generates an array of players, and then, for each element in the array, creates a new 
-    //player object with a name and a character.  For the number of players that are computers, I used an array of names
-    // and an array of characters, and then just selected the next name and character in the list for my player object.
-    // for humans I called the Player constructor with no input parameters (that one asked the user for their name and 
+    //This method dynamically generates an array of players, and then, 
+    //for each element in the array, creates a new 
+    //player object with a name and a character.  
+    //For the number of players that are computers, I used an array of names
+    // and an array of characters, and then just selected the next name 
+    //and character in the list for my player object.
+    // for humans I called the Player constructor with no 
+    //input parameters (that one asked the user for their name and 
     // their preferec character.
     // your code goes here
-    players = new **[numPlayers];
-    for (int i = 0; i < numPlayers; i++) {
+
+    //let us first create players for compPlayers
+    //it is given in the instruction to use an array of names. Let us first create it
+    string compPlayerNames = new string[compPlayers]; //create an array to fill names
+    //array size equals number of compPlayers
+
+    char compPlayerChar = new char[compPlayers]; //create an array to fill chars to fill the board
+    //this array size again equals number of compPlayers
+
+    //let us fill these two arrays now
+    //declare a char here
+    char c = 'A'; //c starts with A
+    for (int i = 0; i < compPlayers; i++)//loop from 0 to number of players
+    {
+        compPlayerNames[i] = "CP" + to_string(i + 1); //to_string() function will convert
+        //integer value to string. it is an inbuilt function
+        //so when you call it, it converts 1,2,3 to string and set names as CP1,CP2...
+
+        compPlayerChar[i] = c; //set c
+        c++; //increment c for next letter
+    }
+
+    /*//next we set the compPlayerchar
+    int index=0;
+    for(char c='A';c<'A'+compPlayers;c++)//in this for loop we are starting from 
+    {//letter 'A' and run the loop upto number of compPlayers
+       compPlayerChar[index]=c;//set the c vaue into the array compPlayerChar
+       index++;//increment index
+       //why did we declare separate variable for index instead of using c from
+       //for loop, the usual style?
+       //because in for loop we are using char and to fill array, the array index
+       //should be a number. So we used this
+    }*/
+
+    //declare an integer to get total number of objects we are to create
+    int totalPlayers = numPlayers + compPlayers; //total players is sum of human players and compPlayers
+
+    //now we need to create an array of objects to class Player
+    Player* myPlayers = new Player[totalPlayers]; //create an array of player objects
+    //whose size is equal to totalPlayers
+
+    //now let us create human players first
+    int plIndex = 0; //declare integer for playerIndex
+
+    for (plIndex = 0; plIndex < numPlayers; plIndex++) {
+        myPlayers[plIndex] = new Player(); //create new Player object with default constructor
+    }
+
+    //now plIndex holds array index.. so you need not have to initialize it 
+    // one more time in the coming for loop
+    for (int k = 0; plIndex < totalPlayers; plIndex++; k++)//k is the variable to get compPlayerName from the array
+    {
+        myPlayers[plIndex] = new Player(compPlayerNames[k], compPlayerChar[k], true);
     }
 }
 
