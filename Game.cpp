@@ -199,33 +199,106 @@ void Game::playGame() {
     // list of bad moves as a last resort.
 }
 
-bool findMoves(char v); //is this meant to be a bracket? - toby
-//    Regular version, this method continues to generate random x,y values until that cell on the
-//    board is empty, then places the player's character v on the board, and checks to see if a 
-//    square is completed using checkFour.  If so, true is returned and that player’s score goes up by 1 in the 
-//    playGame method, and that player gets to take another turn (so turn does not increase by 1).  
-
-
-// movesList * Game::findMoves(char v) {
-// The extra credit version of this method – this method dynamically creates a list of 3 movesList objects.  It then goes
-// through the entire board and classifies each possible move left on the board as being either good (will complete a 
-// square, in which case it’s added to the new list of movesLists at [0], neutral (doesn’t do anything), in which it’s 
-// added to the second of the movesLists, or bad (3/4 of a square), in which case it’s added to the third of the 
-// movesLists.
-// This method uses checkFour() method to determine whether a move is good, checkThree to determine if a move is
-// bad, and if neither of those is true, then the move is considered neutral.
-// This method returns the list of three movesList objects.
-}
+bool Game::findMoves(char v) {
+    //    Regular version, this method continues to generate random x,y values until that cell on the
+    //    board is empty, then places the player's character v on the board, and checks to see if a 
+    //    square is completed using checkFour.  If so, true is returned and that player's score goes up by 1 in the
+    //    playGame method, and that player gets to take another turn (so turn does not increase by 1).  
+    int playerIndex;
+    bool placed = false;
+    //finds index of player playing
+    for (int i = 0; i < numPlayers; i++) {
+        if ((*players[i]).c == v) {
+            playerIndex = i;
+        }
+    }
+    int xval = rand() % size;
+    int yval = rand() % size;
+    for (int i = 0; i < 100; i++) {
+        if (board[xval][yval] == '.') {
+            board[xval][yval] = v;
+            placed = true;
+            if (checkFour(xval, yval) == 1) {
+                (*players[playerIndex]).score++;
+                findMoves(v);
+            } else {
+                break;
+            }
+        }
+        xval = rand() % size;
+        yval = rand() % size;
+    }
+    //100 tries to randomly generate values and place on an empty space
+    if (placed == false) { //if no empty spaces found we iterate through entire board sequentially
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[xval][yval] == '.') {
+                    board[xval][yval] = v;
+                    placed = true;
+                    if (checkFour(xval, yval) == 1) {
+                        (*players[playerIndex]).score++;
+                        findMoves(v);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    // movesList * Game::findMoves(char v) {
+    // The extra credit version of this method - this method dynamically creates a list of 3 movesList objects.  It then goes
+    // through the entire board and classifies each possible move left on the board as being either good (will complete a 
+    // square, in which case it's added to the new list of movesLists at [0], neutral (doesn't do anything), in which it's
+    // added to the second of the movesLists, or bad (3/4 of a square), in which case it's added to the third of the
+    // movesLists.
+    // This method uses checkFour() method to determine whether a move is good, checkThree to determine if a move is
+    // bad, and if neither of those is true, then the move is considered neutral.
+    // This method returns the list of three movesList objects.
+}//findMoves
 
 bool Game::checkFour(int x, int y) {
+    string potChars = ""; //make list of characters in use
+    string compChars[] = {"a", "b", "c", "d", "e"};
+    for (int i = 0; i < compplayers; i++) {
+        potChars += (compChars[i]);
+    }
+    for (int i = compplayers; i < numPlayers; i++) {
+        potChars += (*players[i]).c;
+    }
+    cout << (board[x][y] == '.');
+    if ((potChars.find(board[x - 1][y - 1]) != std::string::npos) && (potChars.find(board[x][y - 1]) != std::string::npos) && (potChars.find(board[x - 1][y]) != std::string::npos)) {
+        return true;
+    } else if ((potChars.find(board[x + 1][y - 1]) != std::string::npos) && (potChars.find(board[x][y - 1]) != std::string::npos) && (potChars.find(board[x + 1][y]) != std::string::npos)) {
+        return true;
+    }
+    else if ((potChars.find(board[x + 1][y + 1]) != std::string::npos) && (potChars.find(board[x][y + 1]) != std::string::npos) && (potChars.find(board[x + 1][y]) != std::string::npos)) {
+        return true;
+    } else if ((potChars.find(board[x - 1][y + 1]) != std::string::npos) && (potChars.find(board[x][y + 1]) != std::string::npos) && (potChars.find(board[x - 1][y]) != std::string::npos)) {
+        return true;
+    } else {
+        return false;
+    }
     // this method checks to see if placing a piece at x and y on the board will complete a square, and, if so, it
     // returns true.  Otherwise it returns false.
-}
+}//checkFour
 
 void Game::getWinner() {
+    int highestScore = -1;
+    int indexOfWinner;
+    for (int i = 0; i < numPlayers; i++) {
+        if ((*players[i]).score > highestScore) {
+            highestScore = (*players[i]).score;
+        }//if
+    }//for
+    for (int i = 0; i < numPlayers; i++) {
+        if ((*players[i]).score == highestScore) {
+            cout << "Winner: " << (*players[i]).name << "!" << endl;
+        }
+    }
+    //multiple players printed in the case of a tie
     // This method determines which of the players in the array of Players has the highest score, and prints out 
-    // that player’s name and their score.
-}
+    // that player's name and their score.
+}//getWinner
 
 bool Game::checkThree(int x, int y) {
     // Only needed for Extra Credit
