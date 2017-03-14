@@ -6,6 +6,7 @@
  */
 
 #include <cstdlib>
+#include "Game.hpp"
 using namespace std;
 
 //game class - responsible for all general fields and methods
