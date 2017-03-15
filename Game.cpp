@@ -12,7 +12,7 @@ using namespace std;
 //    create an array of pointers to Player objects, 
 //sets turn to 0 (for the index of teh current player's
 //    turn), and sets won to be false.
-
+ 
 Game::Game() {
     // for non-automatized version - asks for board size, num players, 
     //num of computer players, and then initializes
