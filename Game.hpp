@@ -14,6 +14,7 @@ class Game {
     int turn;  // indicating which player's turn it is (the index into the players array)
     bool boardFull; //for whether the board is full or not (whether there are more moves)
     int compplayers;  // for the number of automated (computer) players, used when initializing the game
+    bool won;
 
 public:
 
