@@ -130,9 +130,10 @@ void Game::getPlayers() {
     //fill these two arrays now
     //declare a char here
     char c = 'A'; //c starts with A
+    string namearr[] = {"CP1","CP2","CP3","CP4","CP5"};
     for (int i = 0; i < compplayers; i++)//loop from 0 to number of players
     {
-        compplayerNames[i] = "CP" + to_string(i + 1); //to_string() function will convert
+        compplayerNames[i] = namearr[i]//to_string() function will convert
         //integer value to string. 
         //so when you call it, it converts 1,2,3 to string and set names as CP1,CP2...
 
