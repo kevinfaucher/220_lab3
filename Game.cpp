@@ -194,7 +194,7 @@ void Game::playGame() {
             //ask the user to enter the x,y coordinates
             while(findMoves(*players[i].c))//if current player is able to move then his score is up by 1
             {//this one will not be a simple if but a loop because the current
-            //player gets turns until he finds a move
+            //player gets turns until they find a move
                 *players[i].score++;//increment the score by 1
             }
         }
