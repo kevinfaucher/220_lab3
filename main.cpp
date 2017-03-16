@@ -22,7 +22,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-	cout << "hello wolrd!!!" << endl;
+	cout << "hello world!!!" << endl;
 	Game game;
 	game.makeBoard();
 	game.getPlayers();

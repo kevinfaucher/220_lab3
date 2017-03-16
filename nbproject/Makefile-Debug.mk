@@ -39,7 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/cell.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/moveList.o
+	${OBJECTDIR}/movesList.o
 
 
 # C Compiler Flags
@@ -86,10 +86,10 @@ ${OBJECTDIR}/main.o: main.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/moveList.o: moveList.cpp
+${OBJECTDIR}/movesList.o: movesList.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/moveList.o moveList.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/movesList.o movesList.cpp
 
 # Subprojects
 .build-subprojects:

@@ -183,40 +183,44 @@ void Game::playGame() {
     //that player’s score goes up by 1 and that player 
     // takes another turn.  At the end of each round, the board is 
     //printed out and each player’s name and score is printed.
-    boardFull = false;
-    getPlayers(); //call method getPlayers
-    while (boardFull == false)//first check if the boardfull is false. if so then that
+    boardFull=false;
+    getPlayers();//call method getPlayers
+    while(boardFull==false)//first check if the boardfull is false. if so then that
     {//means there is a square to fill
-        boardFull = true; //set boardFull to true first.. 
-        for (int i = 0; i < numPlayers; i++) {
+        boardFull=true;//set boardFull to true first.. 
+        for(int i=0;i<numPlayers;i++)
+        {
             //ask the user to enter the x,y coordinates
-            while (findMoves(*players[i].c))//if current player is able to move then his score is up by 1
+            while(findMoves((*players[i]).c))//if current player is able to move then his score is up by 1
             {//this one will not be a simple if but a loop because the current
-                //player gets turns until they find a move
-                *players[i].score++; //increment the score by 1
+            //player gets turns until he finds a move
+                (*players[i]).score++;//increment the score by 1
             }
         }
-
+        
         //here after each round, the board is printed out
         //and each player's name and score
-        printBoard(); //call the function printBoard to print the board
+        printBoard();//call the function printBoard to print the board
         //now we write a loop to get name and score of each player displayed
-        for (int i = 0; i < numPlayers; i++) {
-            cout << "Player name: " << *players[i].name << " Score: " << *players[i].score << endl;
+        for(int i=0;i<numPlayers;i++)
+        {
+            cout<<"Player name: "<<(*players[i]).name<<" Score: "<<(*players[i]).score<<endl;
         }
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (board[i][j] == '.')//check for a .
+        
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                if(board[i][j]=='.')//check for a .
                 {
-                    boardFull = false; //if at least one . is found, you can say
+                    boardFull=false;//if atleast one . is found, you can say
                     //board is not full so break out of this loop
                     break;
                 }
             }
         }
     }
-
+    
     //Your code goes here
 
     //Note: for the extra credit version, the findMoves method returns a dynamically created array of 3 different moveLists. 
