@@ -8,10 +8,14 @@ Player::Player() {
     //and the character they want to
     //use in the game, and initializes the name and c fields to the entered information.  It also initializes score to 0, and 
     //isComputer to false.
+    /*
     cout << "Please enter your name: ";
     cin >> name;
     cout << "Which character do you want to be: ";
     cin >> c;
+     */
+    name = "Kevin";
+    c = 'a';
     score = 0;
     isComputer = false;
 

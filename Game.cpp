@@ -16,15 +16,21 @@ using namespace std;
 //    turn), and sets won to be false.
 
 Game::Game() {
+    
     // for non-automatized version - asks for board size, num players, 
     //num of computer players, and then initializes
     // everything
+    /*
     cout << "Please enter the size of the board: " << endl;
     cin >> size;
     cout << "Please enter the number of players: " << endl;
     cin >> numPlayers;
     cout << "Please enter the number of computer players: " << endl;
     cin >> compplayers;
+     */
+    size = 3;
+    numPlayers = 2;
+    compplayers = 2;
     numPlayers += compplayers;
     turn = 0; //set turn to 0
     won = false; //sets won to false
