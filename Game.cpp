@@ -1,6 +1,8 @@
 #include "Game.hpp"
 #include <cstdlib>
 #include <iostream>
+#include "movesList.hpp"
+
 using namespace std;
 
 //    This constructor asks for user input (cin) to determine the size of the 
@@ -196,61 +198,80 @@ void Game::playGame() {
     // list of bad moves as a last resort.
 }
 
-bool Game::findMoves(char v) {
-    //    Regular version, this method continues to generate random x,y values until that cell on the
-    //    board is empty, then places the player's character v on the board, and checks to see if a 
-    //    square is completed using checkFour.  If so, true is returned and that player's score goes up by 1 in the
-    //    playGame method, and that player gets to take another turn (so turn does not increase by 1).  
+bool Game::findMoves(char v){
+//    Regular version, this method continues to generate random x,y values until that cell on the
+//    board is empty, then places the player's character v on the board, and checks to see if a 
+//    square is completed using checkFour.  If so, true is returned and that player's score goes up by 1 in the
+//    playGame method, and that player gets to take another turn (so turn does not increase by 1).  
     int playerIndex;
     bool placed = false;
-    //index of current player
-    for (int i = 0; i < numPlayers; i++) {
-        if ((*players[i]).c == v) {
+    //finds index of player playing by character
+    for (int i = 0; i < numPlayers; i++){
+        if ((*players[i]).c == v){
             playerIndex = i;
         }
     }
-    int xval = rand() % size;
-    int yval = rand() % size;
-    for (int i = 0; i < 100; i++) {
-        if (board[xval][yval] == '.') {
-            board[xval][yval] = v;
+    int xcoord = rand()%size;
+    int ycoord = rand()%size;
+    for (int i = 0; i < 100; i++){
+        if (board[ycoord][xcoord] == '.'){
+            board[ycoord][xcoord] = v;
             placed = true;
-            if (checkFour(xval, yval) == 1) {
+            if (checkFour(ycoord, xcoord) == 1){
                 (*players[playerIndex]).score++;
-                findMoves(v);
-            } else {
-                break;
+                printBoard();                
+                cout << "Score +1 for Player " << (*players[turn]).name << endl << endl;
+                printPlayers();
+                return true;
+            }
+            else{
+                turn++;
+                if (turn == numPlayers){
+                    turn = 0;
+                }
+                printBoard();
+                return false;
             }
         }
-        xval = rand() % size;
-        yval = rand() % size;
+    xcoord = rand()%size;
+    ycoord = rand()%size;
     }
-    //random x/y values being generated 
-    if (placed == false) {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (board[xval][yval] == '.') {
-                    board[xval][yval] = v;
+    //100 tries to randomly generate values and place on an empty space
+    if (placed == false){   //if no empty spaces found we iterate through entire board sequentially
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                if (board[ycoord][xcoord] == '.'){
+                    board[ycoord][xcoord] = v;
                     placed = true;
-                    if (checkFour(xval, yval) == 1) {
+                    if (checkFour(ycoord, xcoord) == 1){
                         (*players[playerIndex]).score++;
-                        findMoves(v);
-                    } else {
-                        break;
+                        printBoard();
+                        cout << "Score +1 for Player " << (*players[turn]).name << endl << endl;
+                        printPlayers();
+                        return true;
+                    }
+                    else{
+                        turn++;
+                        if (turn == numPlayers){
+                            turn = 0;
+                        }
+                        printBoard();
+                        return false;
                     }
                 }
             }
         }
     }
-    // movesList * Game::findMoves(char v) {
-    // The extra credit version of this method - this method dynamically creates a list of 3 movesList objects.  It then goes
-    // through the entire board and classifies each possible move left on the board as being either good (will complete a 
-    // square, in which case it's added to the new list of movesLists at [0], neutral (doesn't do anything), in which it's
-    // added to the second of the movesLists, or bad (3/4 of a square), in which case it's added to the third of the
-    // movesLists.
-    // This method uses checkFour() method to determine whether a move is good, checkThree to determine if a move is
-    // bad, and if neither of those is true, then the move is considered neutral.
-    // This method returns the list of three movesList objects.
+    return false; // no moves found
+// movesList * Game::findMoves(char v) {
+// The extra credit version of this method - this method dynamically creates a list of 3 movesList objects.  It then goes
+// through the entire board and classifies each possible move left on the board as being either good (will complete a 
+// square, in which case it's added to the new list of movesLists at [0], neutral (doesn't do anything), in which it's
+// added to the second of the movesLists, or bad (3/4 of a square), in which case it's added to the third of the
+// movesLists.
+// This method uses checkFour() method to determine whether a move is good, checkThree to determine if a move is
+// bad, and if neither of those is true, then the move is considered neutral.
+// This method returns the list of three movesList objects.
 }//findMoves
 
 bool Game::checkFour(int x, int y) {
