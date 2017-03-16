@@ -12,7 +12,7 @@ using namespace std;
 //    create an array of pointers to Player objects, 
 //sets turn to 0 (for the index of teh current player's
 //    turn), and sets won to be false.
- 
+
 Game::Game() {
     // for non-automatized version - asks for board size, num players, 
     //num of computer players, and then initializes
@@ -110,57 +110,25 @@ void Game::printBoard() {
 //new player for the player array.
 
 void Game::getPlayers() {
-    //This method dynamically generates an array of players, and then, 
-    //for each element in the array, creates a new 
-    //player object with a name and a character.  
-    //For the number of players that are computers, I used an array of names
-    // and an array of characters, and then just selected the next name 
-    //and character in the list for my player object.
-    // for humans I called the Player constructor with no 
-    //input parameters (that one asked the user for their name and 
-    // their preferece character.
-
-    //first create players for compPlayers
-    string compplayerNames = new string[compplayers]; //create an array to fill names
-    //array size equals number of compPlayers
-
-    char compplayerChar = new char[compplayers]; //create an array to fill chars to fill the board
-    //this array size again equals number of compPlayers
-
-    //fill these two arrays now
-    //declare a char here
-    char c = 'A'; //c starts with A
-    string namearr[] = {"CP1","CP2","CP3","CP4","CP5"};
-    for (int i = 0; i < compplayers; i++)//loop from 0 to number of players
-    {
-        compplayerNames[i] = namearr[i]//to_string() function will convert
-        //integer value to string. 
-        //so when you call it, it converts 1,2,3 to string and set names as CP1,CP2...
-
-        compplayerChar[i] = c; //set c
-        c++; //increment c for next letter
+    //This method dynamically generates an array of players, and then, for each element in the array, creates a new 
+    //player object with a name and a character.  For the number of players that are computers, I used an array of names
+    // and an array of characters, and then just selected the next name and character in the list for my player object.
+    // for humans I called the Player constructor with no input parameters (that one asked the user for their name and 
+    // their preferred character.
+    string compPlayerNames[] = {"PLAYER1", "PLAYER2", "PLAYER3", "PLAYER4", "PLAYER5"};
+    char compplayerChar[] = {'A', 'B', 'C', 'D', 'E'};
+    players = NULL;
+    int cp = compplayers;
+    players = new Player*[numPlayers];
+    for (int i = 0; i < numPlayers; i++) {
+        if (cp > 0) {
+            players[i] = new Player(compPlayerNames[i], compplayerChar[i], 1);
+            cp--;
+        } else {
+            players[i] = new Player();
+        }
     }
-
-
-    //declare an integer to get total number of objects we are to create
-    //int totalPlayers = numPlayers + compplayers; //total players is sum of human players and compPlayers
-
-    //now we need to create an array of objects to class Player
-    players = new Player*[numPlayers]; //create an array of player objects
-    //whose size is equal to totalPlayers
-
-    //create human players first
-    int plIndex = 0; //declare integer for playerIndex
-
-    for (plIndex = 0; plIndex < numPlayers - compplayers; plIndex++) {
-        players[plIndex] = new Player(); //create new Player object with default constructor
-    }
-
-    for (plIndex = compplayers; plIndex < numPlayers; plIndex++) {
-        players[plIndex] = new Player(compplayerNames[plIndex], compplayerChar[plIndex], true); //double check this code
-    }
-
-}
+}//getPlayers
 
 void Game::printPlayers() {
     // this method is optional – I wrote it so I could test my getPlayers() method to make sure it generated all my Players
@@ -183,44 +151,40 @@ void Game::playGame() {
     //that player’s score goes up by 1 and that player 
     // takes another turn.  At the end of each round, the board is 
     //printed out and each player’s name and score is printed.
-    boardFull=false;
-    getPlayers();//call method getPlayers
-    while(boardFull==false)//first check if the boardfull is false. if so then that
+    boardFull = false;
+    getPlayers(); //call method getPlayers
+    while (boardFull == false)//first check if the boardfull is false. if so then that
     {//means there is a square to fill
-        boardFull=true;//set boardFull to true first.. 
-        for(int i=0;i<numPlayers;i++)
-        {
+        boardFull = true; //set boardFull to true first.. 
+        for (int i = 0; i < numPlayers; i++) {
             //ask the user to enter the x,y coordinates
-            while(findMoves((*players[i]).c))//if current player is able to move then his score is up by 1
+            while (findMoves((*players[i]).c))//if current player is able to move then his score is up by 1
             {//this one will not be a simple if but a loop because the current
-            //player gets turns until he finds a move
-                (*players[i]).score++;//increment the score by 1
+                //player gets turns until he finds a move
+                (*players[i]).score++; //increment the score by 1
             }
         }
-        
+
         //here after each round, the board is printed out
         //and each player's name and score
-        printBoard();//call the function printBoard to print the board
+        printBoard(); //call the function printBoard to print the board
         //now we write a loop to get name and score of each player displayed
-        for(int i=0;i<numPlayers;i++)
-        {
-            cout<<"Player name: "<<(*players[i]).name<<" Score: "<<(*players[i]).score<<endl;
+        for (int i = 0; i < numPlayers; i++) {
+            cout << "Player name: " << (*players[i]).name << " Score: " << (*players[i]).score << endl;
         }
-        
-        for(int i=0;i<size;i++)
-        {
-            for(int j=0;j<size;j++)
-            {
-                if(board[i][j]=='.')//check for a .
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] == '.')//check for a .
                 {
-                    boardFull=false;//if atleast one . is found, you can say
+                    boardFull = false; //if atleast one . is found, you can say
                     //board is not full so break out of this loop
                     break;
                 }
             }
         }
     }
-    
+
     //Your code goes here
 
     //Note: for the extra credit version, the findMoves method returns a dynamically created array of 3 different moveLists. 
@@ -262,7 +226,7 @@ bool Game::findMoves(char v) {
         yval = rand() % size;
     }
     //random x/y values being generated 
-    if (placed == false) { 
+    if (placed == false) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (board[xval][yval] == '.') {
