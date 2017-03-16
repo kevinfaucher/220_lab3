@@ -74,7 +74,7 @@ public:
 //    playGame method, and that player gets to take another turn (so turn does not increase by 1).  Otherwise turn 
 //    increases so that it becomes the next player’s turn (turn must loop back to 0 when it gets to be >= numPlayers)  
     
-    movesList *findMoves(char v);
+    bool findMoves(char v);
     //Extra Credit Version of findMoves:
     //This method dynamically creates and returns a list of 3 movesList objects
     // the first movesList is for the moves that have highest priority (would complete
