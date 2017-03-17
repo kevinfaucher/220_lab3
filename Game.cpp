@@ -422,9 +422,7 @@ bool Game::checkFour(int y, int x) {
 
 void Game::getWinner() {
 // This method determines which of the players in the array of Players has the highest score, and prints out 
-// that player's name and their score. If multiple players have the highest score, they are all winners!
-//Nothing is input and nothing is returned.
-    
+
     int currentHighScore = -1; 
     
     //loop through players to figure out who has the highest score
