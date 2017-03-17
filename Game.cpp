@@ -28,7 +28,7 @@ Game::Game() {
 Game::Game(bool b) {
 //Game constructor for the automated game version - if b is true, randomly generate the size of the board, set the num of players and the
 //num of compplayers to 2, and the, of course initialize everything
-    if (b==1){  //as long as b is true we initialize appropriate values
+    if (b){  
         cout << "Dots and Boxes (AI)" << endl;
         srand(time(NULL));
         size = rand()%9+3;
@@ -206,12 +206,12 @@ void Game::playGame() {
     //PvC or PVP match
     if (playMore == 1){    
         cout << endl;
-        //Call non automated match contructor
+        //Call non automated match constructor
         Game game; 
     }
-    if (playMore == 2){    //AI game started; useful for testing
+    if (playMore == 2){   
         cout << endl;
-        Game(1);
+        Game(true);
     }
     boardFull = true;   
 }
