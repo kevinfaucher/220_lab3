@@ -9,18 +9,6 @@
 #include "Game.hpp"
 using namespace std;
 
-//game class - responsible for all general fields and methods
-//necessary for playing the game
-//player class - includes all properties and constructors for a player in
-//the game (makes game its friend)
-//cell class - responsible for holding the x and y coordinates of a cell, 
-//cell constructors and methods for resetting a cell's value to x and y
-
-//"Your main function should include, other than seeding the random number generator,
-//and returning 0,1 line." Not sure what this means..
-/*
- * 
- */
 int main(int argc, char** argv) {
 	cout << "hello world!!!" << endl;
 	Game game;
