@@ -1,83 +1,50 @@
 #include "Game.hpp"
 #include <cstdlib>
 #include <iostream>
-#include "movesList.hpp"
-
+#include <time.h>
 using namespace std;
 
-//    This constructor asks for user input (cin) to determine the size of the 
-//gameboard, the number of 
-//    and the number of players who are computers (automated).  
-//It then sets the size, numplayers, and 
-//    compplayers and calls the makeBoard method to create the board, 
-//calls the getPlayers function to 
-//    create an array of pointers to Player objects, 
-//sets turn to 0 (for the index of teh current player's
-//    turn), and sets won to be false.
-
-Game::Game() {
-    
-    // for non-automatized version - asks for board size, num players, 
-    //num of computer players, and then initializes
-    // everything
-    /*
-    cout << "Please enter the size of the board: " << endl;
+Game::Game() {  
+//Game constructor for non-automatized version - asks for board size, num players, num of computer players, and then initializes
+//everything
+    cout << "Dots and Boxes" << endl;
+    cout << "Please enter the board size: ";
     cin >> size;
-    cout << "Please enter the number of players: " << endl;
+    cout << "Please enter the total amount of players: ";
     cin >> numPlayers;
-    cout << "Please enter the number of computer players: " << endl;
+    cout << "How many of the total players are AI: ";
     cin >> compplayers;
-     */
-    size = 3;
-    numPlayers = 2;
-    compplayers = 2;
-    numPlayers += compplayers;
-    turn = 0; //set turn to 0
-    won = false; //sets won to false
-    makeBoard(); //call the makeBoard function
-    getPlayers(); //call the getPlayers function
-
+    boardFull = false;
+    turn = 0;
+    if (boardFull == false){ //should always be true
+        makeBoard();   
+        printBoard();
+        getPlayers();  
+        printPlayers();
+        playGame();    
+    } 
 }//Game
 
-//    This constructor takes as input a boolean value indicating whether 
-//the game is completely automated
-//    or not.  If the game is automated (true boolean value), 
-//the numplayers and the compplayers are both
-//    set to 2 (meaning that there are 2 players, 
-//and they're both automatic, not human).  The board is 
-//    matrix is created as a random square size between 3 and 11 and 
-//calling makeBoard()), turn is set 
-//    to 0 (the first player), won is set to false, and the 
-//getPlayers function is called to create an array
-//    of pointers to Player objects.
-//    If the game is not automated (boolean value is false), 
-//the Game() constructor is called.
-//   This constructor is awesome for testing and for working
-//on Artificial Intelligence. 
-
 Game::Game(bool b) {
-    //for the automated version - if b is true, 
-    //randomly generate the size of the board, set the num of players and the
-    //num of compplayers to 2, and the, of course initialize everything
-
-    //check if b is true
-    if (b)//if true then that means the game is fully automated
-    {
-        //if game is fully automated, the set numPlayers and compPlayers to 2
+//Game constructor for the automated game version - if b is true, randomly generate the size of the board, set the num of players and the
+//num of compplayers to 2, and the, of course initialize everything
+    if (b==1){  //as long as b is true we initialize appropriate values
+        cout << "Dots and Boxes (AI)" << endl;
+        srand(time(NULL));
+        size = rand()%9+3;
         numPlayers = 2;
         compplayers = 2;
-        //now set size as a random number between 3 and 11
-        size = rand() % 11 + 3; //random board size. here it should be +3 as size
-        //starts from 3 and not from 1
-        //after size is set we call the makeBoard()
-        makeBoard();
-        turn = 0; //turn is set to 0
-        won = false; //won is set to false
-        getPlayers(); //getPlayers is called
-    } else {
-        //if the game is not fully automated, then simply call the constructor Game()
-        Game();
+        boardFull = false;
+        turn = 0;
     }
+    if (boardFull == false){ //should always be true
+        makeBoard();    
+        printBoard();   
+        cout << endl;
+        getPlayers();  
+        printPlayers();
+        playGame();    
+    } 
 }//Game
 
 void Game::makeBoard() {
@@ -93,29 +60,16 @@ void Game::makeBoard() {
     }
 }//makeBoard
 
+
 void Game::printBoard() {
-    //Note: I'm giving you this one
+//Note: I'm giving you this one. This function prints the board by iterating with a for loop. Nothing is input and nothing is returned.
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            cout << board[i][j] << "\t";
+            cout << board[i][j]<<"\t";
         }
-        cout << endl;
+        cout << endl << endl;   //added another print line for better spacing
     }
 }//printBoard
-
-
-//   This method sets up the dynamically created array of Players (players array).  
-//   I did this by including an array of names that was as long as the maximum 
-//number of players I could have in the 
-//   game, and an equally long array of characters for those players.  
-//   This function then dynamically allocated an array of players, and for 
-//each computer player (compplayers) it 
-//   created a new player object with a name from the name array and a
-//character from the character array.  It then
-//  initialized each human player by asking (cout) for the player’s name and 
-//reading it in (cin) and then asking for the
-// player’s character and reading that in, and then creating a
-//new player for the player array.
 
 void Game::getPlayers() {
     //This method dynamically generates an array of players, and then, for each element in the array, creates a new 
@@ -147,183 +101,349 @@ void Game::printPlayers() {
 }
 
 void Game::playGame() {
-    // This is the heart of the game.  
-    //I called this method directly from my Game constructor(s) 
-    //as the very last thing.
-    //This method loops until the board is full.  
-    // In each loop, the next player either chooses 
-    //where to place their character (if human) or the x,y coordinates are 
-    // randomly generated (and checked to make sure the player isn’t overwriting 
-    //a piece already on the board).
-    //It checks to see if the new piece completes a square, and, if so, 
-    //that player’s score goes up by 1 and that player 
-    // takes another turn.  At the end of each round, the board is 
-    //printed out and each player’s name and score is printed.
-    boardFull = false;
-    getPlayers(); //call method getPlayers
-    while (boardFull == false)//first check if the boardfull is false. if so then that
-    {//means there is a square to fill
-        boardFull = true; //set boardFull to true first.. 
-        for (int i = 0; i < numPlayers; i++) {
-            //ask the user to enter the x,y coordinates
-            while (findMoves((*players[i]).c))//if current player is able to move then his score is up by 1
-            {//this one will not be a simple if but a loop because the current
-                //player gets turns until he finds a move
-                (*players[i]).score++; //increment the score by 1
+
+//The function checks to see if the new piece completes a square, and, if so, that player's score goes up by 1 and that player
+// takes another turn.  At the end of each round, the board is printed out and each player's name and score is printed.
+//The chance to play another game is also offered.
+    
+    //Keeps track of the number of game loops
+    int numGameIterations = 0;   
+    
+    //x and y values are set to one initially
+    int xvalue = -1;   
+    int yvalue = -1;
+    
+    //Continue the game variable--for coordinate placement
+    bool gameContinue = true;       
+    
+    //Initally player placement condition is set to true
+    bool initPlace = true;     
+    
+    int playMore; 
+    int matrixSize = size*size;
+    //Keep going as long as there are spaces on the board
+    while (numGameIterations < matrixSize){ 
+        
+        //Check to see if it is an AI player
+        if ((*players[turn]).isComputer == true){   
+            
+            //If the continue var is true and the AI completes a square
+            //Update loop iterations and continue var
+            while (gameContinue == true){  
+                if (findMoves((*players[turn]).c) == true){ 
+                    numGameIterations++; 
+                    if (numGameIterations == matrixSize){ 
+                        gameContinue = false;  
+                    }
+                }
+                else{  
+                    numGameIterations = numGameIterations + 1;
+                    gameContinue = false;   
+                    printPlayers();     
+                }       
             }
         }
-
-        //here after each round, the board is printed out
-        //and each player's name and score
-        printBoard(); //call the function printBoard to print the board
-        //now we write a loop to get name and score of each player displayed
-        for (int i = 0; i < numPlayers; i++) {
-            cout << "Player name: " << (*players[i]).name << " Score: " << (*players[i]).score << endl;
-        }
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (board[i][j] == '.')//check for a .
-                {
-                    boardFull = false; //if atleast one . is found, you can say
-                    //board is not full so break out of this loop
-                    break;
+        //Condition for if it is human player's turn
+        else{  
+            while (gameContinue == true){   
+                //Check to see if they can keep placing and what to do if they can
+                
+                while (initPlace == true || xvalue >= size || yvalue >= size || xvalue < 0 || yvalue < 0 || board[yvalue][xvalue] != '.' ){    //as long as they start placing or do not choose an appropriate placement; we ask for input coordinates
+                    cout << (*players[turn]).name << " Enter your x value coordinate: ";
+                    cin >> xvalue; 
+                    cout << " Now enter your y value coordinate";
+                    cin >> yvalue;
+                    //This is no longer the first placement on the board, setting the boolean accordingly
+                    initPlace = false;
+                }
+                //Fill in the location of the board based on player input
+                board[yvalue][xvalue] = (*players[turn]).c;  
+                
+                
+                //Checking if a player completed a square
+                if (checkFour(yvalue, xvalue) == true){   
+                    
+                    //Give the player a point if they make a square
+                    (*players[turn]).score++;
+                    cout << endl << "Score +1 for Player " << (*players[turn]).name << endl;    //score + 1 printed
+                    
+                    //Display the updated game board and player info
+                    printBoard();
+                    printPlayers();
+                    numGameIterations = numGameIterations + 1;      
+                    
+                    
+                    if (numGameIterations == matrixSize){ 
+                        gameContinue = false;   
+                    }
+                }
+                else{   
+                    //if a player does not complete a square the turn var is incremented
+                    turn = turn + 1; 
+                    
+                    //cycle back through turns 
+                    if (turn == numPlayers){    
+                        turn = 0;
+                    }
+                    numGameIterations = numGameIterations + 1;
+                    gameContinue = false;  
+                    
+                    //Display the board and player info
+                    printBoard();   
+                    printPlayers(); 
                 }
             }
         }
+        gameContinue = true; 
     }
-
-    //Your code goes here
-
-    //Note: for the extra credit version, the findMoves method returns a dynamically created array of 3 different moveLists. 
-    // The first of the 3  contains the list of moves that would complete a square. The second of the 3 contains a list of 
-    // neutral moves, and the third of the 3 contains the list of moves that place a third corner on a square (which are bad 
-    // moves because the next player will then be able to complete a square.
-    // In this version, the next move is chosen by first trying to pick (randomly) among potential moves that would 
-    // complete a square, and then by trying to pick a move that is, in essence, neutral, and then last, it chooses from the
-    // list of bad moves as a last resort.
+    //When there are no more spaces on the matrix call getWinner to output which player won
+    getWinner();    
+    
+    //Determine if the player want to play again
+    cout << "\nEnter '1' to play again, '2' to watch a computer match or "<< endl << " '3' to stop playing";
+    cin >> playMore;
+    
+    //PvC or PVP match
+    if (playMore == 1){    
+        cout << endl;
+        //Call non automated match contructor
+        Game game; 
+    }
+    if (playMore == 2){    //AI game started; useful for testing
+        cout << endl;
+        Game(1);
+    }
+    boardFull = true;   
 }
 
 bool Game::findMoves(char v){
-//    Regular version, this method continues to generate random x,y values until that cell on the
-//    board is empty, then places the player's character v on the board, and checks to see if a 
-//    square is completed using checkFour.  If so, true is returned and that player's score goes up by 1 in the
-//    playGame method, and that player gets to take another turn (so turn does not increase by 1).  
-    int playerIndex;
-    bool placed = false;
-    //finds index of player playing by character
-    for (int i = 0; i < numPlayers; i++){
-        if ((*players[i]).c == v){
-            playerIndex = i;
+    
+    //Var to keep track of the index of the player
+    int indexP;
+    
+    //Var to check if placed
+    bool set = false;
+    
+    //Locates player index
+    for (int i = 0; i < numPlayers; i++){   
+        if ((*players[i]).c == v){          
+            indexP = i;                
         }
     }
-    int xcoord = rand()%size;
-    int ycoord = rand()%size;
-    for (int i = 0; i < 100; i++){
-        if (board[ycoord][xcoord] == '.'){
-            board[ycoord][xcoord] = v;
-            placed = true;
-            if (checkFour(ycoord, xcoord) == 1){
-                (*players[playerIndex]).score++;
-                printBoard();                
-                cout << "Score +1 for Player " << (*players[turn]).name << endl << endl;
-                printPlayers();
-                return true;
+    
+    //Generate random x and y values for AI
+    int ranXval = rand()%size;               
+    int ranYval = rand()%size;
+    
+    for (int i = 0; i < size*size; i++){      
+        
+        //find an open spot on the board
+        if (board[ranYval][ranXval] == '.'){ 
+           
+            //set down there
+            board[ranYval][ranXval] = v;      
+            set = true;
+            if (checkFour(ranYval, ranXval) == 1){    
+                (*players[indexP]).score++;    
+                printBoard();                       
+                cout << "Score has increased by 1 for " << (*players[turn]).name << endl << endl;    
+                printPlayers();                    
+                return true;    
+            }
+            else{           
+                turn++;     
+                if (turn == numPlayers){  
+                    turn = 0;              
+                }
+                printBoard();               
+                return false;   
+            }
+        }
+    ranXval = rand()%size;   
+    ranYval = rand()%size;
+    }
+   //no moves found
+    return false;
+
+}
+
+bool Game::checkFour(int y, int x) {
+    //This method checks to see if adding the character v to the cell x,y in the board will complete a square, and, if
+    // so, returns true 
+   
+    //list of chars being used by human players
+    string playerChars = "";  
+
+    //list of characters useable by AI
+    string aiChars[] = {"A","B","C","D","E"}; 
+
+    //add player characters to array
+    for (int i = 0; i < compplayers; i++){  
+        playerChars += (aiChars[i]);        
+    }
+    for (int i = compplayers; i < numPlayers; i++){ 
+        playerChars += (*players[i]).c;    
+    }
+
+    //left side
+    if (x == 0){ 
+        if (y == 0){   
+            if ((playerChars.find(board[y+1][x+1]) != std::string::npos) &&
+                (playerChars.find(board[y+1][x]) != std::string::npos) && 
+                (playerChars.find(board[y][x+1]) != std::string::npos)){  
+                return true;   
             }
             else{
-                turn++;
-                if (turn == numPlayers){
-                    turn = 0;
-                }
-                printBoard();
+                return false;
+            }  
+        }
+        else if (y == size-1){   
+            
+            if ((playerChars.find(board[y][x+1]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x+1]) != std::string::npos)){
+                return true;    
+                //true if surrounding cells are filled
+            }
+            else{
                 return false;
             }
         }
-    xcoord = rand()%size;
-    ycoord = rand()%size;
-    }
-    //100 tries to randomly generate values and place on an empty space
-    if (placed == false){   //if no empty spaces found we iterate through entire board sequentially
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                if (board[ycoord][xcoord] == '.'){
-                    board[ycoord][xcoord] = v;
-                    placed = true;
-                    if (checkFour(ycoord, xcoord) == 1){
-                        (*players[playerIndex]).score++;
-                        printBoard();
-                        cout << "Score +1 for Player " << (*players[turn]).name << endl << endl;
-                        printPlayers();
-                        return true;
-                    }
-                    else{
-                        turn++;
-                        if (turn == numPlayers){
-                            turn = 0;
-                        }
-                        printBoard();
-                        return false;
-                    }
-                }
+        else{  
+            
+            if (((playerChars.find(board[y+1][x+1]) != std::string::npos) &&
+                    (playerChars.find(board[y+1][x]) != std::string::npos) &&
+                    (playerChars.find(board[y][x+1]) != std::string::npos)) || 
+                    ((playerChars.find(board[y-1][x+1]) != std::string::npos) && 
+                    (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                    (playerChars.find(board[y][x+1]) != std::string::npos))){
+                return true;    
+            }
+            else{
+                return false;
             }
         }
     }
-    return false; // no moves found
-// movesList * Game::findMoves(char v) {
-// The extra credit version of this method - this method dynamically creates a list of 3 movesList objects.  It then goes
-// through the entire board and classifies each possible move left on the board as being either good (will complete a 
-// square, in which case it's added to the new list of movesLists at [0], neutral (doesn't do anything), in which it's
-// added to the second of the movesLists, or bad (3/4 of a square), in which case it's added to the third of the
-// movesLists.
-// This method uses checkFour() method to determine whether a move is good, checkThree to determine if a move is
-// bad, and if neither of those is true, then the move is considered neutral.
-// This method returns the list of three movesList objects.
-}//findMoves
-
-bool Game::checkFour(int x, int y) {
-    string pChars = "";
-    string cChars[] = {"a", "b", "c", "d", "e"};
-    for (int i = 0; i < compplayers; i++) {
-        pChars += (cChars[i]);
+    //relative rightmost side of matrix
+    else if (x == size-1){
+        if (y == 0){  
+          
+            if ((playerChars.find(board[y+1][x-1]) != std::string::npos) && 
+                (playerChars.find(board[y+1][x]) != std::string::npos) && 
+                (playerChars.find(board[y][x-1]) != std::string::npos)){
+                return true;  
+            }
+            else{
+                return false;
+            }  
+        }
+        else if (y == size-1){    
+          
+            if ((playerChars.find(board[y-1][x-1]) != std::string::npos) &&
+                    (playerChars.find(board[y-1][x]) != std::string::npos) &&
+                    (playerChars.find(board[y][x-1]) != std::string::npos)){
+                return true;    
+            }
+            else{
+                return false;
+            }
+        }
+        else{   
+           
+            if (((playerChars.find(board[y+1][x-1]) != std::string::npos) && 
+                    (playerChars.find(board[y+1][x]) != std::string::npos) && 
+                    (playerChars.find(board[y][x-1]) != std::string::npos)) || 
+                    ((playerChars.find(board[y-1][x-1]) != std::string::npos) &&
+                    (playerChars.find(board[y-1][x]) != std::string::npos) &&
+                    (playerChars.find(board[y][x-1]) != std::string::npos))){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
-    for (int i = compplayers; i < numPlayers; i++) {
-        pChars += (*players[i]).c;
+    else if (y == 0){  
+        if (((playerChars.find(board[y+1][x-1])
+                != std::string::npos) && (playerChars.find(board[y+1][x]) != std::string::npos) && 
+                (playerChars.find(board[y][x-1]) != std::string::npos)) ||
+                ((playerChars.find(board[y+1][x+1]) != std::string::npos) && 
+                (playerChars.find(board[y+1][x]) != std::string::npos) &&
+                (playerChars.find(board[y][x+1]) != std::string::npos))){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-    cout << (board[x][y] == '.');
-    if ((pChars.find(board[x - 1][y - 1]) != std::string::npos) && (pChars.find(board[x][y - 1]) != std::string::npos) && (pChars.find(board[x - 1][y]) != std::string::npos)) {
-        return true;
-    } else if ((pChars.find(board[x + 1][y - 1]) != std::string::npos) && (pChars.find(board[x][y - 1]) != std::string::npos) && (pChars.find(board[x + 1][y]) != std::string::npos)) {
-        return true;
-    } else if ((pChars.find(board[x + 1][y + 1]) != std::string::npos) && (pChars.find(board[x][y + 1]) != std::string::npos) && (pChars.find(board[x + 1][y]) != std::string::npos)) {
-        return true;
-    } else if ((pChars.find(board[x - 1][y + 1]) != std::string::npos) && (pChars.find(board[x][y + 1]) != std::string::npos) && (pChars.find(board[x - 1][y]) != std::string::npos)) {
-        return true;
-    } else {
-        return false;
+    else if (y == size-1){
+        //relative bottom of matrix 
+        if (((playerChars.find(board[y][x-1]) != std::string::npos) &&
+                (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x-1]) != std::string::npos)) ||
+                ((playerChars.find(board[y][x+1]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x+1]) != std::string::npos))){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-
+    
+    //central cell checks
+    else{  
+        if ((playerChars.find(board[y-1][x-1]) != std::string::npos) && 
+                (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                (playerChars.find(board[y][x-1]) != std::string::npos)){
+            return true;
+        }
+        else if ((playerChars.find(board[y-1][x+1]) != std::string::npos) &&
+                (playerChars.find(board[y-1][x]) != std::string::npos) && 
+                (playerChars.find(board[y][x+1]) != std::string::npos)){
+            return true;
+        } 
+        else if ((playerChars.find(board[y+1][x+1]) != std::string::npos) &&
+                (playerChars.find(board[y+1][x]) != std::string::npos) &&
+                (playerChars.find(board[y][x+1]) != std::string::npos)){
+            return true;    
+        }
+        else if ((playerChars.find(board[y+1][x-1]) != std::string::npos) &&
+                (playerChars.find(board[y+1][x]) != std::string::npos) &&
+                (playerChars.find(board[y][x-1]) != std::string::npos)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    return false; 
 }
 
 void Game::getWinner() {
-    int highScore = -1;
-    int iWinner; //index of winner
-    for (int i = 0; i < numPlayers; i++) {
-        if ((*players[i]).score > highScore) {
-            highScore = (*players[i]).score;
-        }//if
-    }//for
-    for (int i = 0; i < numPlayers; i++) {
-        if ((*players[i]).score == highScore) {
-            cout << "Winner: " << (*players[i]).name << "!" << endl;
+// This method determines which of the players in the array of Players has the highest score, and prints out 
+// that player's name and their score. If multiple players have the highest score, they are all winners!
+//Nothing is input and nothing is returned.
+    
+    int currentHighScore = -1; 
+    
+    //loop through players to figure out who has the highest score
+    for(int i = 0; i < numPlayers; i++){      
+	if((*players[i]).score > currentHighScore){ 
+            currentHighScore = (*players[i]).score; 
+	}
+        if ((*players[i]).score == currentHighScore){   
+            //Output with winner
+            cout << "The winner is: " << (*players[i]).name << " with a score of: " << (*players[i]).score << endl;   
         }
-    }
-    //multiple players printed in the case of a tie
-    // This method determines which of the players in the array of Players has the highest score, and prints out 
-    // that player's name and their score.
-}//getWinner
+    
+    
+}
+}
+
 
 bool Game::checkThree(int x, int y) {
-    // Only needed for Extra Credit
-    // This method determines whether placing a piece on the board at x and y will complete ¾ of a square and, if so, it 
-    // returns true.  Otherwise it returns false.
-}
+// Only needed for Extra Credit
+// This method determines whether placing a piece on the board at x and y will complete - of a square and, if so, it
+// returns true.  Otherwise it returns false.
+}//checkThree
